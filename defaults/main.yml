@@ -1,0 +1,4 @@
+---
+zsh_prezto_repo: https://github.com/sorin-ionescu/prezto.git
+zsh_prezto_repo_version: HEAD
+zsh_prezto_dest: ~/.zprezto

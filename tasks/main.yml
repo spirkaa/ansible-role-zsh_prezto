@@ -1,0 +1,34 @@
+---
+- name: Install packages
+  package:
+    state: present
+    name:
+      - git
+      - zsh
+  become: true
+
+- name: Clone Prezto repo
+  git:
+    repo: "{{ zsh_prezto_repo }}"
+    dest: "{{ zsh_prezto_dest }}"
+    version: "{{ zsh_prezto_repo_version }}"
+    recursive: yes
+    force: yes
+
+- name: Configure Prezto
+  file:
+    src: "{{ zsh_prezto_dest }}/runcoms/{{ item }}"
+    dest: ~/.{{ item }}
+    state: link
+  loop:
+    - zlogin
+    - zpreztorc
+    - zprofile
+    - zshenv
+    - zshrc
+
+- name: Change user shell to zsh
+  user:
+    name: "{{ ansible_user }}"
+    shell: /bin/zsh
+  become: true
